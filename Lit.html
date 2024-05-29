@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackout Poem Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        #poem-container {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr); /* Adjust columns as needed */
+            gap: 2px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .square {
+            width: 80px;
+            height: 40px;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+
+        .square.revealed {
+            background-color: white;
+            color: black;
+            cursor: default;
+        }
+
+        .square.marker {
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="poem-container"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const poemText = `
+                A slash of A katana, A flash of fire, then A beheaded demon. i missed The climax of The episode because i was too busy reading the subtitles.
+                This seemingly simple problem catapulted me into The world of Japanese language and culture landing in a submitted application for a summer abroad in Kyoto.
+                Opening the acceptance email, I was flooded with excitement to learn The meaning behind my favorite J-pop songs and see my drawing of the Japanese pagodas come to life that summer.
+                Reflecting on my time in Japan, i was able to build meaningful connections, massively improve my Japanese fluency, and develop my independence.
+                Living with a host family opened my eyes to many Japanese practices and ideals. Whenever i came home, i learned to bellow "Tadaima" and everyone responded  “Okairi”.
+                This interaction symbolizes the warmth of returning home. More than just simple greetings, these words signified that I was truly part of their family.
+                While I was able to pick up some Japanese by osmosis, The real catalyst to my fluency was applying what i learned in class in conversations with locals.
+                Beyond just language, it was about connecting with others and their culture in a way that no textbook can describe.
+                Navigating Japan’s world-class but also incredibly complex metro system, planning my own meals, and deciding how to spend each day, all contributed to my enhanced sense of independence.
+                i didn’t just bring home souvenirs, I brought back an addiction to matcha, a sense that high-speed rail was The solution to America's transportation crisis, and a photo of me with that same pagoda from art class.
+                Continuing the journey, i founded a Japanese club to explore The rich culture together with classmates.
+                While I'm still missing The climax of my favorite anime, lost in subtitles, this journey led me to a deeper understanding and appreciation of a culture that is now an integral part of who I am.
+                You can find me cooking up some homemade ramen, working towards functional fluency on Duolingo, or advertising our next tea ceremony around campus.
+                Matane (until next time) Japan.
+            `;
+
+            const revealWords = [
+                "katana,", "fire,", "beheaded", "demon.", "too", "busy", "reading", "the", "subtitles.", "I",
+                "flooded", "with", "meaningful", "connections", "Living", "opened", "eyes", "warmth", 
+                "returning", "home", "truly", "part", "family", "pick", "up", "some", "Japanese",
+                "connecting", "with", "others", "culture", "no", "textbook", "describe", "addiction",
+                "solution", "Continuing", "journey", "led", "to", "a", "deeper", "understanding",
+                "Matane", "until", "next", "time"
+            ];
+
+            const poemArray = poemText.trim().split(/\s+/);
+
+            const container = document.getElementById('poem-container');
+
+            poemArray.forEach((word, index) => {
+                const square = document.createElement('div');
+                square.classList.add('square');
+                square.innerText = "";
+                if (revealWords.includes(word)) {
+                    square.classList.add('marker');
+                }
+                square.addEventListener('click', () => revealWord(index));
+                container.appendChild(square);
+            });
+
+            function revealWord(index) {
+                const word = poemArray[index];
+                const square = document.getElementsByClassName('square')[index];
+                if (revealWords.includes(word)) {
+                    square.classList.add('revealed');
+                    square.innerText = word;
+                } else {
+                    alert("Try again!");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
